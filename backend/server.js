@@ -6,6 +6,8 @@ import helmet from "helmet";
 
 import { sql } from "./config/db.js";
 
+import productRoutes from "./routes/product.route.js";
+
 const app = express();
 
 dotenv.config();
@@ -15,6 +17,9 @@ app.use(express.json());
 app.use(cors());
 app.use(helmet()); // helmet is a security middleware that helps you protect your app by setting various HTTP headers.
 app.use(morgan("dev")); // log all the requests to the console
+
+//routes
+app.use("/api/products", productRoutes);
 
 //connecting to the database
 const initDB = async () => {
