@@ -1,4 +1,5 @@
 import express from "express";
+import path from "path";
 import cors from "cors";
 import dotenv from "dotenv";
 import morgan from "morgan";
@@ -13,10 +14,17 @@ const app = express();
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
+const __dirname = path.resolve();
 
 app.use(express.json());
 app.use(cors());
-app.use(helmet()); // helmet is a security middleware that helps you protect your app by setting various HTTP headers.
+
+app.use(
+  helmet({
+    contentSecurityPolicy: false, // disable CSP for simplicity; configure as needed
+  })
+); // helmet is a security middleware that helps you protect your app by setting various HTTP headers.
+
 app.use(morgan("dev")); // log all the requests to the console
 
 // apply arcjet rate-limit to all routes
@@ -57,6 +65,16 @@ app.use(async (req, res, next) => {
 
 //routes
 app.use("/api/products", productRoutes);
+
+// production code
+if (process.env.NODE_ENV === "production") {
+  // server our react app
+  app.use(express.static(path.join(__dirname, "/frontend/dist")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+  });
+}
 
 //connecting to the database
 const initDB = async () => {

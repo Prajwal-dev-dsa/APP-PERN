@@ -3,3 +3,13 @@
 @plugin "daisyui" {
     themes:pastel,retro,coffee,forest,cyberpunk,synthwave,luxury,autumn,valentine,aqua,business,night,dracula
 }
+
+/* Hide scrollbar for all browsers but allow scrolling */
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE 10+ */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}

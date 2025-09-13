@@ -11,7 +11,7 @@ function App() {
   const { theme } = useThemeStore();
   return (
     <div
-      className="min-h-screen bg-base-200 transition-colors duration-300"
+      className="min-h-screen bg-base-200 transition-colors duration-300 hide-scrollbar overflow-auto h-[calc(100vh-100px)]"
       data-theme={`${theme}`}
     >
       <Navbar />
