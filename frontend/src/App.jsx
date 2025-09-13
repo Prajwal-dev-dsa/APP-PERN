@@ -1,17 +1,23 @@
-import React from "react";
+import { Route, Routes } from "react-router-dom";
+
+import Navbar from "./components/Navbar";
+import HomePage from "./pages/HomePage";
+import ProductPage from "./pages/ProductPage";
+
+import { useThemeStore } from "./store/useThemeStore";
 
 function App() {
+  const { theme } = useThemeStore();
   return (
-    <div>
-      <h1 className="text-blue-400 text-9xl">hello</h1>
-      <button className="btn btn-neutral">Neutral</button>
-      <button className="btn btn-primary">Primary</button>
-      <button className="btn btn-secondary">Secondary</button>
-      <button className="btn btn-accent">Accent</button>
-      <button className="btn btn-info">Info</button>
-      <button className="btn btn-success">Success</button>
-      <button className="btn btn-warning">Warning</button>
-      <button className="btn btn-error">Error</button>
+    <div
+      className="min-h-screen bg-base-200 transition-colors duration-300"
+      data-theme={`${theme}`}
+    >
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/product/:id" element={<ProductPage />} />
+      </Routes>
     </div>
   );
 }
